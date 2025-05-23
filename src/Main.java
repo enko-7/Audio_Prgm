@@ -6,7 +6,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Guten Tag, heute helfen wir ihnen die Ausrichtung des Lautsprechers im freien zu optimieren\n " +
-                "Geben Sie bitte den Schalldruckpegel in \"db\" an");
+                "Geben Sie bitte den Schalldruckpegel in \"db\" an wenn man einen Meter entfernt steht");
 
         int spl = sc.nextInt();
 
@@ -14,14 +14,14 @@ public class Main {
 
         int eingabe = sc.nextInt();
 
-        int werte = 0;
+        int wert = 0;
 
         for (int i = 1; i <= eingabe; i++) {
             System.out.print(i + ". Eingabe: ");
-            werte = sc.nextInt();
+            wert = sc.nextInt();
         }
 
-        double ergebnis = spl + (20 * Math.log10(1.0 / 10)) - 3;
+        double ergebnis = spl + (20 * Math.log10(1.0 / wert)) - 3;
 
         System.out.println(ergebnis);
     }
