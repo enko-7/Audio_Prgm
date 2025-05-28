@@ -14,16 +14,24 @@ public class Main {
 
         int eingabe = sc.nextInt();
 
-        int wert = 0;
+        int polarPlotWert = 0;
+
+        double ergebnis = 0;
+
+        int[] werteArr = new int[eingabe];
 
         for (int i = 1; i <= eingabe; i++) {
+            int y = 0;
+
             System.out.print(i + ". Eingabe: ");
-            wert = sc.nextInt();
+            werteArr[y] = sc.nextInt();
+
+            ergebnis = Math.round(((spl + (20 * Math.log10(1.0 / werteArr[y])) - 3) / 100.0) * 100);
+            ++y;
+            System.out.println(ergebnis);
         }
 
-        double ergebnis = Math.round(((spl + (20 * Math.log10(1.0 / wert)) - 3) / 100.0) * 100);
 
-        System.out.println(ergebnis);
     }
 
 
