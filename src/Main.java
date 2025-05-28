@@ -5,29 +5,29 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Guten Tag, heute helfen wir ihnen die Ausrichtung des Lautsprechers im freien zu optimieren. \n " +
-                "Geben Sie bitte den Schalldruckpegel in \"db\" an wenn man einen Meter entfernt steht");
+        System.out.println("Guten Tag, heute helfen wir Ihnen die Ausrichtung des Lautsprechers im freien zu optimieren. \n " +
+                "Geben Sie bitte den Schalldruckpegel in \"db\" an, wenn man einen Meter entfernt steht");
 
-        int spl = sc.nextInt();
+        double spl = sc.nextDouble();
 
-        System.out.println("Wie viele Distanzen wollen sie testen? ");
+        System.out.println("Wie viele Distanzen wollen Sie testen? ");
 
         int eingabe = sc.nextInt();
 
-        int[] polarPlotWert = new int[eingabe];
+        double[] polarPlotWert = new double[eingabe];
 
-        double ergebnis = 0;
+        double ergebnis;
 
-        int[] werteArr = new int[eingabe];
+        double[] werteArr = new double[eingabe];
 
         for (int i = 1; i <= eingabe; i++) {
             int y = 0;
 
             System.out.print(i + ". Eingabe in Meter: ");
-            werteArr[y] = sc.nextInt();
-            System.out.print("Bitte den Polarplotwert eingeben: ");
-            polarPlotWert[y] = sc.nextInt();
-            ergebnis = Math.round(((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) / 100.00) * 100);
+            werteArr[y] = sc.nextDouble();
+            System.out.print("Bitte den Polarplotwert eingeben: -");
+            polarPlotWert[y] = sc.nextDouble();
+            ergebnis = Math.round((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) * 1000.0) / 1000.0;
             ++y;
             System.out.println(ergebnis);
         }
