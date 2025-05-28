@@ -21,7 +21,7 @@ public class Main {
             wert = sc.nextInt();
         }
 
-        double ergebnis = spl + (20 * Math.log10(1.0 / wert)) - 3;
+        double ergebnis = Math.round(((spl + (20 * Math.log10(1.0 / wert)) - 3) / 100.0) * 100);
 
         System.out.println(ergebnis);
     }
