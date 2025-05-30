@@ -16,24 +16,38 @@ public class Main {
 
         double[] polarPlotWert = new double[eingabe];
 
-        double ergebnis;
+        double[] ergebnis = new double[eingabe];
 
         double[] werteArr = new double[eingabe];
+        int y = 0;
 
         for (int i = 1; i <= eingabe; i++) {
-            int y = 0;
+
 
             System.out.print(i + ". Eingabe in Meter: ");
             werteArr[y] = sc.nextDouble();
             System.out.print("Bitte den Polarplotwert eingeben: -");
             polarPlotWert[y] = sc.nextDouble();
-            ergebnis = Math.round((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) * 1000.0) / 1000.0;
+
+            ergebnis[y] = Math.round((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) * 1000.0) / 1000.0;
+
+            System.out.println(y + " " + ergebnis[y]);
             ++y;
-            System.out.println(ergebnis);
         }
 
+        for (int i = 0; i < eingabe - 1; i++) {
+            if (ergebnis[i] < ergebnis[i + 1]) {
+                double tmp = ergebnis[i];
+                ergebnis[i] = ergebnis[i + 1];
+                ergebnis[i + 1] = tmp;
+                System.out.println("geaendert");
+            }
+        }
 
+        for (double j : ergebnis) {
+            System.out.print(j + " ");
+        }
+
+        System.out.println(ergebnis.length);
     }
-
-
 }
