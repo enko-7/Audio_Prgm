@@ -5,49 +5,62 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Guten Tag, heute helfen wir Ihnen die Ausrichtung des Lautsprechers im freien zu optimieren. \n " +
-                "Geben Sie bitte den Schalldruckpegel in \"db\" an, wenn man einen Meter entfernt steht");
+        System.out.println("Guten Tag, heute helfen wir Ihnen die Ausrichtung des Lautsprechers im freien zu optimieren. ");
 
-        double spl = sc.nextDouble();
+        boolean gefunden = false;
 
-        System.out.println("Wie viele Distanzen wollen Sie testen? ");
+        while (!gefunden) {
 
-        int eingabe = sc.nextInt();
+            System.out.println("Geben Sie bitte den Schalldruckpegel in \"dB\" an, wenn man einen Meter entfernt steht:");
+            double spl = sc.nextDouble();
 
-        double[] polarPlotWert = new double[eingabe];
+            System.out.println("Wie viele Distanzen wollen Sie testen? ");
 
-        double[] ergebnis = new double[eingabe];
+            int eingabe = sc.nextInt();
 
-        double[] werteArr = new double[eingabe];
-        int y = 0;
+            double[] polarPlotWert = new double[eingabe];
 
-        for (int i = 1; i <= eingabe; i++) {
+            double[] ergebnis = new double[eingabe];
+
+            double[] werteArr = new double[eingabe];
+            int y = 0;
+
+            for (int i = 1; i <= eingabe; i++) {
+
+                System.out.print(i + ". Eingabe in Meter: ");
+                werteArr[y] = sc.nextDouble();
+                System.out.print("Bitte den Polarplotwert eingeben: -");
+                polarPlotWert[y] = sc.nextDouble();
+
+                ergebnis[y] = Math.round((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) * 1000.0) / 1000.0;
+
+                System.out.println(ergebnis[y]);
+                ++y;
+            }
+
+            for (int i = 0; i < eingabe - 1; i++) {
+                if (ergebnis[i] < ergebnis[i + 1]) {
+                    double tmp = ergebnis[i];
+                    ergebnis[i] = ergebnis[i + 1];
+                    ergebnis[i + 1] = tmp;
+                }
+            }
 
 
-            System.out.print(i + ". Eingabe in Meter: ");
-            werteArr[y] = sc.nextDouble();
-            System.out.print("Bitte den Polarplotwert eingeben: -");
-            polarPlotWert[y] = sc.nextDouble();
+            System.out.println("Ihre errechneten Werte sortiert, beginnend mit dem größten");
 
-            ergebnis[y] = Math.round((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) * 1000.0) / 1000.0;
+            for (double j : ergebnis) {
+                System.out.print("[" + j + "]" + " ");
+            }
 
-            System.out.println(y + " " + ergebnis[y]);
-            ++y;
-        }
-
-        for (int i = 0; i < eingabe - 1; i++) {
-            if (ergebnis[i] < ergebnis[i + 1]) {
-                double tmp = ergebnis[i];
-                ergebnis[i] = ergebnis[i + 1];
-                ergebnis[i + 1] = tmp;
-                System.out.println("geaendert");
+            if ((ergebnis[0] - ergebnis[ergebnis.length - 1]) <= 6) {
+                gefunden = true;
+                System.out.println("\nIhre Werte liegen im vorgeschlagen Bereich von 6 dB! \n" +
+                        "Viel Spaß mit Ihrem Soundsystem.");
+            } else {
+                System.out.println("Ihre Werte liegen nicht im vorgeschlagen Bereich von 6 dB! \n" +
+                        "Bitte probieren Sie neue Messwerte aus.");
             }
         }
-
-        for (double j : ergebnis) {
-            System.out.print(j + " ");
-        }
-
-        System.out.println(ergebnis.length);
     }
 }
