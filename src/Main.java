@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,35 +8,58 @@ public class Main {
 
         System.out.println("Guten Tag, heute helfen wir Ihnen die Ausrichtung des Lautsprechers im freien zu optimieren. ");
 
+        double spl = 0;
+        int eingabe = 0;
         boolean gefunden = false;
+        boolean check = false;
 
         while (!gefunden) {
+            while (!check) {
+                try {
+                    System.out.println("Geben Sie bitte den Schalldruckpegel in \"dB\" an, wenn man einen Meter entfernt steht:");
+                    spl = sc.nextDouble();
+                    check = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Keine Zahl");
+                    sc.next();
+                }
+            }
 
-            System.out.println("Geben Sie bitte den Schalldruckpegel in \"dB\" an, wenn man einen Meter entfernt steht:");
-            double spl = sc.nextDouble();
-
-            System.out.println("Wie viele Distanzen wollen Sie testen? ");
-
-            int eingabe = sc.nextInt();
+            while (check) {
+                try {
+                    System.out.println("Wie viele Distanzen wollen Sie testen? ");
+                    eingabe = sc.nextInt();
+                    check = false;
+                } catch (InputMismatchException e) {
+                    System.out.println("Keine Zahl");
+                    sc.next();
+                }
+            }
 
             double[] polarPlotWert = new double[eingabe];
 
             double[] ergebnis = new double[eingabe];
 
             double[] werteArr = new double[eingabe];
-            int y = 0;
+            //int y = 0;
 
-            for (int i = 1; i <= eingabe; i++) {
+            for (int i = 0; i < eingabe; i++) {
+                while (polarPlotWert[polarPlotWert.length-1] == 0) {
+                    try {
+                        System.out.print(i+1 + ". Eingabe in Meter: ");
+                        werteArr[i] = sc.nextDouble();
+                        System.out.print("Bitte den Polarplotwert eingeben: -");
+                        polarPlotWert[i] = sc.nextDouble();
 
-                System.out.print(i + ". Eingabe in Meter: ");
-                werteArr[y] = sc.nextDouble();
-                System.out.print("Bitte den Polarplotwert eingeben: -");
-                polarPlotWert[y] = sc.nextDouble();
+                        ergebnis[i] = Math.round((spl + (20 * Math.log10(1.0 / werteArr[i])) - polarPlotWert[i]) * 1000.0) / 1000.0;
 
-                ergebnis[y] = Math.round((spl + (20 * Math.log10(1.0 / werteArr[y])) - polarPlotWert[y]) * 1000.0) / 1000.0;
-
-                System.out.println(ergebnis[y]);
-                ++y;
+                        System.out.println(ergebnis[i]);
+                        ++i;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Keine Zahl");
+                        sc.next();
+                    }
+                }
             }
 
             for (int i = 0; i < eingabe - 1; i++) {
@@ -61,9 +85,7 @@ public class Main {
                 System.out.println("Ihre Werte liegen nicht im vorgeschlagen Bereich von 6 dB! \n" +
                         "Bitte probieren Sie neue Messwerte aus.");
             }
-
-
         }
-        System.out.println("hallo mein 2. Branch");
     }
 }
+
