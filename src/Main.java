@@ -19,7 +19,7 @@ public class Main {
         // solange die Ausrichtung nicht stimmt wird es wiederholt
         while (!gefunden) {
 
-            //check für User input ob eingabe Valide ist
+            //check für User input ob eingabe Valide ist, angabe des Lautsprechers in dB
             while (!check) {
                 try {
                     System.out.println("Geben Sie bitte den Schalldruckpegel in \"dB\" an, wenn man einen Meter entfernt steht:");
